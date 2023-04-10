@@ -5,7 +5,7 @@ import { selectQuoteData, selectExampleQuotes } from "src/store/selectors";
 import { exampleQuotes } from "src/store/slice";
 import Quote from "../Quote/Quote";
 
-const Quotes: React.FC = () => {
+const QuotesList: React.FC = () => {
   const dispatch = useAppDispatch();
   const quotesData = useAppSelector(selectQuoteData);
   const sample = useAppSelector(selectExampleQuotes);
@@ -16,23 +16,23 @@ const Quotes: React.FC = () => {
     setSortedData(sortedQuotesData);
   }, [quotesData, sample]);
 
-//   add and update tickers in sample arr
+  //   add and update tickers in sample arr
   const handleAddToSample = (ticker: string) => {
     dispatch(exampleQuotes([...sample, ticker]));
   };
 
   return (
-    <div className="container mx-auto my-4">
+    <div className="container mx-auto my-4 p-4 mt-4 mb-4">
       <div className="w-full overflow-x-auto">
-        <table className="table-auto w-full">
+        <table className="table-auto mx-auto text-sm">
           <thead>
             <tr className="bg-gray-100">
-              <th className="px-4 py-2 text-left">Ticker</th>
-              <th className="px-4 py-2 text-left">Exchange</th>
-              <th className="px-4 py-2 text-left">Price</th>
-              <th className="px-4 py-2 text-left">Change Percent</th>
-              <th className="px-4 py-2 text-left">Dividend</th>
-              <th className="px-4 py-2 text-left">Yield</th>
+              <th className="px-4 py-2 text-left border">Ticker</th>
+              <th className="px-4 py-2 text-left border">Exchange</th>
+              <th className="px-4 py-2 text-left border">Price</th>
+              <th className="px-4 py-2 text-left border">Change Percent</th>
+              <th className="px-4 py-2 text-left border">Dividend</th>
+              <th className="px-4 py-2 text-left border">Yield</th>
             </tr>
           </thead>
           <tbody>
@@ -41,13 +41,14 @@ const Quotes: React.FC = () => {
                 <tr
                   key={quote.ticker}
                   className={`${
-                    quote.change_percent > 0 ? "bg-green-100" : "bg-red-100"
+                    quote.change_percent > 0 ? "bg-green-200" : "bg-red-200"
                   } hover:bg-gray-200`}
                 >
-                  <td className="border px-4 py-2">{quote.ticker}</td>
+                  <td className="border px-4 py-2 font-bold">{quote.ticker}</td>
                   <td className="border px-4 py-2">{quote.exchange}</td>
                   <td className="border px-4 py-2">
-                    <Quote price={+quote.price} />
+                    <i className="mdi mdi-currency-usd mr-1"></i>
+                    <Quote price={+quote.price} className="font-bold" />
                   </td>
                   <td
                     className={`border px-4 py-2 ${
@@ -56,23 +57,24 @@ const Quotes: React.FC = () => {
                         : "text-red-600"
                     }`}
                   >
-                    {quote.change_percent}%
+                    <i className="mdi mdi-percent mr-1"></i>
+                    {quote.change_percent}
                   </td>
                   <td className="border px-4 py-2">
                     <div className="flex items-center">
-                      <i className="fas fa-dollar-sign mr-1"></i>
+                      <i className="mdi mdi-currency-usd mr-1"></i>
                       {quote.dividend}
                     </div>
                   </td>
                   <td className="border px-4 py-2">
                     <div className="flex items-center">
-                      <i className="fas fa-percent mr-1"></i>
+                      <i className="mdi mdi-percent mr-1"></i>
                       {quote.yield}
                       <button
                         className="ml-2 bg-blue-500 text-white px-2 py-1 rounded"
                         onClick={() => handleAddToSample(quote.ticker)}
                       >
-                        Add
+                        Select
                       </button>
                     </div>
                   </td>
@@ -80,9 +82,7 @@ const Quotes: React.FC = () => {
               ))
             ) : (
               <tr>
-                <td className="border px-4 py-2" >
-                  Server is down
-                </td>
+                <td className="border px-4 py-2">Server is down</td>
               </tr>
             )}
           </tbody>
@@ -97,4 +97,4 @@ const sortBySample = (data: QuotesTypes[], sample: string[]): QuotesTypes[] => {
   return filteredData;
 };
 
-export default Quotes;
+export default QuotesList;

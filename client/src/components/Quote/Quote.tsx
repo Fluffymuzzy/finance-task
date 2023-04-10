@@ -3,6 +3,7 @@ import clsx from "clsx";
 
 type QuoteType = {
   price: number;
+  className?: string;
 };
 
 const Quote: React.FC<QuoteType> = ({ price }) => {

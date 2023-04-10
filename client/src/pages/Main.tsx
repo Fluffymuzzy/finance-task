@@ -10,6 +10,9 @@ import { useAppDispatch, useAppSelector } from "src/store/hooks";
 import { setQuotes } from "src/store/slice";
 import { selectFetchInterval } from "src/store/selectors";
 import { SocketContext } from "src/utils/socket";
+import Header from "src/components/Header/Header";
+import Footer from "src/components/Footer/Footer";
+import SelectedQuotes from "src/components/SelectedQuotes/SelectedQuotes";
 import QuotesList from "src/components/QuotesList/QuotesList";
 
 const Main = () => {
@@ -50,9 +53,12 @@ const Main = () => {
   }, [fetchInterval, socket]);
 
   return (
-    <div className="container mx-auto">
+    <>
+      <Header />
+      <SelectedQuotes />
       <QuotesList />
-    </div>
+      <Footer />
+    </>
   );
 };
 
